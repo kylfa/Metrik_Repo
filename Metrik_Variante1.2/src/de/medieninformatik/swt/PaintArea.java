@@ -17,8 +17,8 @@ import java.awt.geom.Ellipse2D;
 public class PaintArea extends Canvas implements MouseListener {
     private int douClX, douClY, douClX1, douClY1;
     private int circleCount;
-    private boolean reset;
-    private final int DIA = 20;
+    public boolean reset;
+    private int DIA = 20;
 
     /**
      * Setting standards of the area and calls method to initialize the declared variables.
@@ -41,8 +41,13 @@ public class PaintArea extends Canvas implements MouseListener {
         reset = false;
     }
 
+    public void setDIA(int DIA) {
+        this.DIA = DIA;
+    }
+
     /**
      * Calls methods to draw first and second circle and to clear the area after that.
+     * Moreover, the positions of the circles will be print in the corner of the canvas.
      * @param g for painting
      */
     @Override
@@ -50,8 +55,12 @@ public class PaintArea extends Canvas implements MouseListener {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        if (circleCount == 1) drawEllipse(douClX1, douClY1, g2d);
+        if (circleCount == 1) {
+            drawEllipse(douClX1, douClY1, g2d);
+            g2d.drawString("X1: " + douClX1 + " Y1: " + douClY1, 370, 330 );
+        }
         drawEllipse(douClX, douClY, g2d);
+        if (douClX >= 0 && douClY >= 0) g2d.drawString("X: " + douClX + " Y: " + douClY, 370, 310 );
 
         if (reset) {
             g.clearRect(0, 0, 500, 400);
